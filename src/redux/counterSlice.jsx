@@ -52,18 +52,18 @@ export const counterSlice = createSlice({
         state.error = action.error.message
       })
       //add
-       .addCase(getData.fulfilled, (state, action) => {
+       .addCase(addData.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
       //update
-      .addCase(getData.fulfilled, (state, action) => {
+      .addCase(updateData.fulfilled, (state, action) => {
         const index = state.items.findIndex(
           (item) => item.id === action.payload.id
         );
         if (index !== -1) state.items[index] = action.payload;
       })
       //detele
-      .addCase(getData.fulfilled, (state, action) => {
+      .addCase(deleteData.fulfilled, (state, action) => {
         state.items = state.items.filter(
           (item) => item.id !== action.payload
         );
