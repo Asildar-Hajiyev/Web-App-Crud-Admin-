@@ -1,5 +1,12 @@
+import { useNavigate } from "react-router-dom"
 
 function AdminHeader() {
+   const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    navigate("/login")
+  }
   return (
     <header className="h-16 bg-white border-b border-gray-100 px-6 flex items-center justify-between sticky top-0 z-10">
 
@@ -32,6 +39,7 @@ function AdminHeader() {
 
         {/* Çıxış */}
         <button
+          onClick={handleLogout}
           type="button"
           className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
           aria-label="Çıxış"
