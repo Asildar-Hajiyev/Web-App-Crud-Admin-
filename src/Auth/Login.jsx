@@ -1,33 +1,38 @@
+import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { RegisterFormSchemas } from "../schemas/REgisterFormSchemas";
 
 const ADMIN_EMAIL = "admin@admin";
 const ADMIN_PASSWORD = "admin123";
 function Login() {
   const navigate = useNavigate();
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(false);
 
-  const loginol = (e) => {
-    e.preventDefault();
-    setError(false);
-
-    if (username === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      localStorage.setItem("token", "true"); // burda əsl backend gələndə real JWT token gələcək
+  const loginol = (values) => {
+    if (values.username === ADMIN_EMAIL && values.password === ADMIN_PASSWORD) {
+      localStorage.setItem("token", "true");
+      toast.success("Uğurla daxil oldunuz!");
       navigate("/admin");
     } else {
-      setError(true);
-      setTimeout(() => setError(false), 3000);
+      toast.error("Daxil edilən məlumat yanlışdır.");
     }
   };
+
+  const { values, errors, handleSubmit, handleChange, touched } = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: RegisterFormSchemas,
+    onSubmit: loginol,
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans p-6">
       <form
-        onSubmit={loginol}
+        onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-xl border border-gray-100 space-y-5"
       >
         <h1 className="text-xl font-bold text-gray-900 text-center">
@@ -40,10 +45,18 @@ function Login() {
           </label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm"
+            value={values.username}
+            onChange={handleChange}
+            name="username"
+            className={`w-full px-4 py-2.5 border rounded-xl focus:outline-none focus:ring-2 text-sm transition-colors ${
+              touched.username && errors.username
+                ? "border-red-400 focus:ring-red-400/40"
+                : "border-gray-300 focus:ring-blue-500/40"
+            }`}
           />
+          {touched.username && errors.username && (
+            <p className="text-xs text-red-600 mt-1.5">{errors.username}</p>
+          )}
         </div>
 
         <div>
@@ -53,9 +66,14 @@ function Login() {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm"
+              value={values.password}
+              onChange={handleChange}
+              name="password"
+              className={`w-full px-4 py-2.5 pr-10 border rounded-xl focus:outline-none focus:ring-2 text-sm transition-colors ${
+                touched.password && errors.password
+                  ? "border-red-400 focus:ring-red-400/40"
+                  : "border-gray-300 focus:ring-blue-500/40"
+              }`}
             />
             <button
               type="button"
@@ -65,22 +83,10 @@ function Login() {
               {showPassword ? "🙈" : "👁️"}
             </button>
           </div>
+          {touched.password && errors.password && (
+            <p className="text-xs text-red-600 mt-1.5">{errors.password}</p>
+          )}
         </div>
-
-        {error && (
-          <div
-            id="alertBox"
-            className="bg-red-100 text-red-800 p-4 rounded-lg flex items-center justify-center animate__animated animate__backInDown"
-            role="alert"
-          >
-            <span className="font-semibold text-[15px] inline-block mr-4">
-              Xəta!
-            </span>
-            <span className="block text-sm font-medium sm:inline max-sm:mt-2">
-              Daxil edilən məlumat yanlışdır.
-            </span>
-          </div>
-        )}
 
         <button
           type="submit"

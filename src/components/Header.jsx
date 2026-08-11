@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom"
 
 function Header() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
   <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-sm border-b border-gray-200 px-6 py-3.5">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
