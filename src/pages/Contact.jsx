@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 function Contact() {
+      useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans text-gray-800">
       <main className="flex-1 flex items-center justify-center p-6 md:p-12">

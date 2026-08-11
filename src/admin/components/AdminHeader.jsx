@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function AdminHeader() {
    const navigate = useNavigate()
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
+   try {
+     localStorage.removeItem("token")
+    toast.success("Uğurla çıxış edildi")
     navigate("/login")
+   } catch (error) {
+    toast.error(error.message,"Çıxıs alınmadı")
+   }
   }
   return (
     <header className="h-16 bg-white border-b border-gray-100 px-6 flex items-center justify-between sticky top-0 z-10">

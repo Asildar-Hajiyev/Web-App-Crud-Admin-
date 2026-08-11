@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 function About() {
+      useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans text-gray-800 py-12 px-6">
       <main className="max-w-5xl mx-auto flex flex-col justify-center space-y-12">
