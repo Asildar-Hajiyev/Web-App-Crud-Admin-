@@ -1,34 +1,35 @@
 import { useEffect } from "react";
 
 function Contact() {
-      useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans text-gray-800">
-      <main className="flex-1 flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-12 space-y-8">
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-12">
+        <div className="w-full max-w-3xl bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 md:p-12 space-y-6 sm:space-y-8">
           {/* Başlıq */}
-          <div className="text-center space-y-3">
+          <div className="text-center space-y-2 sm:space-y-3">
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
               Əlaqə
             </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
               Bizimlə Əlaqə Saxlayın
             </h1>
-            <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed px-1 sm:px-0">
               Suallarınız, təklifləriniz və ya dəstək üçün aşağıdakı əlaqə
               vasitələrindən istifadə edə bilərsiniz.
             </p>
           </div>
 
           {/* Əlaqə Məlumatları Grid-i */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2">
             {/* E-poçt */}
-            <div className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -52,10 +53,10 @@ function Contact() {
             </div>
 
             {/* Telefon */}
-            <div className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -79,10 +80,10 @@ function Contact() {
             </div>
 
             {/* Ünvan */}
-            <div className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors sm:col-span-2">
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors sm:col-span-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

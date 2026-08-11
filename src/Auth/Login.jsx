@@ -6,6 +6,7 @@ import { RegisterFormSchemas } from "../schemas/REgisterFormSchemas";
 
 const ADMIN_EMAIL = "admin@admin";
 const ADMIN_PASSWORD = "admin123";
+
 function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -30,12 +31,12 @@ function Login() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100 font-sans p-4 sm:p-6">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-xl border border-gray-100 space-y-5"
+        className="w-full max-w-sm bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 space-y-5"
       >
-        <h1 className="text-xl font-bold text-gray-900 text-center">
+        <h1 className="text-lg sm:text-xl font-bold text-gray-900 text-center">
           Admin Panele Giriş
         </h1>
 
@@ -79,6 +80,7 @@ function Login() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              aria-label={showPassword ? "Parolu gizlət" : "Parolu göstər"}
             >
               {showPassword ? "🙈" : "👁️"}
             </button>
