@@ -61,7 +61,7 @@ export const counterSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // CREATE
+      // CREATE-add
       .addCase(addData.pending, (state) => {
         state.loading = true;
       })
