@@ -6,58 +6,26 @@ import {
   getUser,
   updateUser,
 } from "../../redux/userSlice";
-import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { UserFormSchemas } from "../../schemas/UserFormSchemas";
 
 function Users() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.user);
-
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [age, setAge] = useState("");
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const SubmitHandle = (e) => {
-    e.preventDefault(); //bu bizim datamizin submit olmasini gozleyir
-
-    //eger tutaq ki image yoxdursa bos gonderme ve s.
-    if (!image || !age || !name || !surname || !phone) {
-      toast.error("Zəhmət olmasa bütün sahələri doldurun");
-      return;
-    }
-
-    if (editId) {
-      dispatch(
-        updateUser({
-          id: editId,
-          updateUser: { image, name, surname, phone, age },
-        }),
-      );
-      setEditId(null); // redaktə bitdi, geri "əlavə et" rejiminə qayıt
-    } else {
-      dispatch(createUser({ image, name, surname, phone, age }));
-    }
-
-    // formu təmizləyirik
-    setImage("");
-    setName("");
-    setSurname("");
-    setPhone("");
-    setAge("");
-  };
-  // "Redaktə" düyməsinə basanda: formu köhnə dəyərlərlə doldur
   const editHandleClick = (item) => {
-    setName(item.name);
-    setSurname(item.surname);
-    setAge(item.age);
-    setImage(item.image);
-    setPhone(item.phone);
+    setValues({
+      name: item.name,
+      surname: item.surname,
+      age: item.age,
+      image: item.image,
+      phone: item.phone,
+    });
     setEditId(item.id);
   };
 
@@ -69,7 +37,41 @@ function Users() {
     dispatch(deleteUser(id));
   };
 
- if (loading && data.length === 0)
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setValues,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: {
+      id: null,
+      name: "",
+      surname: "",
+      age: "",
+      phone: "",
+      image: "",
+    },
+    validationSchema: UserFormSchemas,
+    onSubmit: (item) => {
+      if (editId) {
+        dispatch(
+          updateUser({
+            id: editId,
+            updateUser: item,
+          }),
+        );
+        setEditId(null); // redaktə bitdi, geri "əlavə et" rejiminə qayıt
+      } else {
+        dispatch(createUser(item));
+      }
+      resetForm();
+    },
+  });
+
+  if (loading && data.length === 0)
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -94,47 +96,78 @@ function Users() {
           {editId ? "İstifadəçini redaktə et" : "Yeni istifadəçi əlavə et"}
         </h2>
         <form
-          onSubmit={SubmitHandle}
+          onSubmit={handleSubmit}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3"
         >
-          <input
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="Şəkil URL"
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
-          />
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ad"
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
-          />
-          <input
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            placeholder="Soyad"
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
-          />
-          <input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Telefon"
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
-          />
-          <input
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Yaş"
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
-          />
+          <div>
+            <input
+              name="image"
+              value={values.image}
+              onChange={handleChange}
+              placeholder="Şəkil URL"
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
+            />
+            {touched.image && errors.image && (
+              <p className="text-xs text-red-500 mt-1">{errors.image}</p>
+            )}
+          </div>
+          <div>
+            <input
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              placeholder="Ad"
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
+            />{" "}
+            {touched.name && errors.name && (
+              <p className="text-xs text-red-500 mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              name="surname"
+              value={values.surname}
+              onChange={handleChange}
+              placeholder="Soyad"
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
+            />{" "}
+            {touched.surname && errors.surname && (
+              <p className="text-xs text-red-500 mt-1">{errors.surname}</p>
+            )}
+          </div>
+          <div>
+            <input
+              name="phone"
+              value={values.phone}
+              onChange={handleChange}
+              placeholder="Telefon"
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
+            />{" "}
+            {touched.phone && errors.phone && (
+              <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
+            )}
+          </div>
+          <div>
+            <input
+              name="age"
+              value={values.age}
+              onChange={handleChange}
+              placeholder="Yaş"
+              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-colors"
+            />
+            {touched.age && errors.age && (
+              <p className="text-xs text-red-500 mt-1">{errors.age}</p>
+            )}
+          </div>
 
           <div className="sm:col-span-2 lg:col-span-5 pt-1">
             <button
               type="submit"
-                disabled={loading}
+              disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
             >
-               {loading ? "Göndərilir..." : editId ? "Yenilə" : "Əlavə et"}
+              {loading ? "Göndərilir..." : editId ? "Yenilə" : "Əlavə et"}
             </button>
           </div>
         </form>
