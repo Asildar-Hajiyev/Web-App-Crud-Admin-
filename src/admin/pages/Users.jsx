@@ -27,9 +27,9 @@ function Users() {
     e.preventDefault(); //bu bizim datamizin submit olmasini gozleyir
 
     //eger tutaq ki image yoxdursa bos gonderme ve s.
-    if(!image || !age || !name || !surname || !phone){
-      toast.error("Zəhmət olmasa bütün sahələri doldurun")
-      return
+    if (!image || !age || !name || !surname || !phone) {
+      toast.error("Zəhmət olmasa bütün sahələri doldurun");
+      return;
     }
 
     if (editId) {
@@ -62,10 +62,14 @@ function Users() {
   };
 
   const deleteHandle = (id) => {
+    const confirmed = window.confirm(
+      "Bu istifadəçini silmək istədiyinizə əminsiniz?",
+    );
+    if (!confirmed) return;
     dispatch(deleteUser(id));
   };
 
-  if (loading)
+ if (loading && data.length === 0)
     return (
       <div className="flex items-center justify-center min-h-[300px]">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -127,9 +131,10 @@ function Users() {
           <div className="sm:col-span-2 lg:col-span-5 pt-1">
             <button
               type="submit"
+                disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
             >
-              {editId ? "Yenilə" : "Əlavə et"}
+               {loading ? "Göndərilir..." : editId ? "Yenilə" : "Əlavə et"}
             </button>
           </div>
         </form>
