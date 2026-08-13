@@ -82,6 +82,7 @@ const userSlice = createSlice({
 
     // ! delete
     .addCase(deleteUser.fulfilled, (state,action)=>{
+        state.loading = false
         state.data = state.data.filter(item=>item.id !== action.payload)
     })
     .addCase(deleteUser.rejected, (state,action)=>{
