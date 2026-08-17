@@ -29,7 +29,6 @@ function AdminHeader() {
     { label: "Dashboard", path: "/admin" },
     { label: "Sifarişlər", path: "/admin/orders" },
     { label: "İstifadəçilər", path: "/admin/users" },
-    { label: "Tənzimləmələr", path: "/admin/settings" },
   ];
   const userEmail = user?.email || "admin@admin";
   return (
@@ -94,7 +93,7 @@ function AdminHeader() {
                 type="button"
                 onClick={() => {
                   setMenuOpen(false);
-                  navigate("/admin/profile");
+                  navigate("/admin");
                 }}
                 className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               >

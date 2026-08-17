@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const BASE_URL = "https://6a79c891674f43f4db11c371.mockapi.io/product";
+const BASE_URL = "https://6a79c891674f43f4db11c371.mockapi.io/user";
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
   const res = await axios.get(BASE_URL);

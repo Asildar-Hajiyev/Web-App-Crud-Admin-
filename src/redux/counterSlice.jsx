@@ -53,7 +53,7 @@ export const counterSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getData.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(getData.rejected, (state, action) => {
