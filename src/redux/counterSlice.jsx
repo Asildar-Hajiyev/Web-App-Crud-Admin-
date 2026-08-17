@@ -99,7 +99,7 @@ export const counterSlice = createSlice({
         state.deletedItem = state.data.find((item) => item.id === id);
         state.data = state.data.filter((item) => item.id !== id); // dərhal sil
       })
-      .addCase(deleteData.fulfilled, (state, action) => {
+      .addCase(deleteData.fulfilled, (state) => {
         state.deletedItem = null;
       })
       .addCase(deleteData.rejected,(state,action)=>{
