@@ -1,9 +1,10 @@
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function GuestRoute({ children }) {
-  const token = localStorage.getItem("token");
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  if (token) {
+  if (isAuthenticated) {
     return <Navigate to="/admin" replace />;
   }
 
